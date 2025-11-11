@@ -1,12 +1,19 @@
 
 //login
+
+
+
 let form = document.getElementById("login-form");
-form.addEventListener("submit",function(ev){
-    ev.preventDefault();
+form.addEventListener("submit",function(e){
+    e.preventDefault();
 
 const uemail = document.getElementById("login-email").value;
 const upassword = document.getElementById("login-password").value;
 
+const emailm="abiratkhadija@gmail.com";
+const passwordm="khadija";
+
+if(uemail===emailm && upassword===passwordm ){
 const userlogin = {
     isLoggedIn: true,
     email: uemail,
@@ -14,15 +21,12 @@ const userlogin = {
     username: uemail.split("@")[0],
 }
  localStorage.setItem("userl", JSON.stringify(userlogin));
+ window.location.href="index.html";
 
- window.location.href("index.html");
+}
+else{
+    alert("email ou la mot de passe est incorect");
+}
 
 });
 
-//pour telech les info de usr
-
-const infouser=JSON.parse(localStorage.getItem("userl"));
-if(infouser && infouser.isLoggedIn === true)
-{
-
-}
