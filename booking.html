@@ -148,7 +148,7 @@
           <a href="destinations.html" class="nav-link hover:text-neon-blue transition-colors">Destinations</a>
           <a href="booking.html" class="nav-link hover:text-neon-blue transition-colors">Booking</a>
           <a href="about.html" class="nav-link hover:text-neon-blue transition-colors">About</a>
-          <a href="login.html" class="nav-link hover:text-neon-blue transition-colors">Login</a>
+          <a href="login.html" class="btnlogin nav-link hover:text-neon-blue transition-colors">Login</a>
         </div>
 
         <!-- Mobile menu button -->
@@ -186,10 +186,8 @@
               <div>
                 <label for="destination" class="block text-sm font-medium text-gray-300 mb-2">Destination</label>
                 <select id="destination" name="destination" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue appearance-none">
-                  <option>Select your destination</option>
-                  <option>Moon Base Alpha</option>
-                  <option>Mars Colony</option>
-                  <option>Europa Orbital Station</option>
+                  <option value="">Select your destination</option>
+                 
                 </select>
               </div>
 
@@ -372,6 +370,8 @@
         menu.classList.toggle("open");
       });</script>
   
-    <script src="/js/BookingManager.js"></script>
+    <script src="index.js"></script>
+       <script src="booking.js"></script>
+
   </body>
 </html>
