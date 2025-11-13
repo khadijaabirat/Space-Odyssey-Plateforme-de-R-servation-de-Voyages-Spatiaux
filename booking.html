@@ -182,15 +182,15 @@
           <input type="hidden" id="booking-id-field" name="bookingId" value="" />
           <section class="mb-10">
             <h2 class="text-2xl font-orbitron font-semibold mb-6 text-neon-cyan">Journey Details</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label for="destination" class="block text-sm font-medium text-gray-300 mb-2">Destination</label>
+            <div>
+              <div class="select">
+               <label for="destination" class="block text-sm font-medium text-gray-300 mb-2">Destination</label>
                 <select id="destination" name="destination" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue appearance-none">
-                  <option value="">Select your destination</option>
-                 
+                  <option value="">Select your destination</option>   
                 </select>
+               <div id="divselect" >
               </div>
-
+              </div>
               <div>
                 <label for="departureDate" class="block text-sm font-medium text-gray-300 mb-2">Departure Date</label>
                 <div class="relative">
@@ -202,12 +202,11 @@
                 <p id="date-error" class="input-error"></p>
               </div>
             </div>
-
             <div class="mt-8">
               <label class="block text-sm font-medium text-gray-300 mb-3">Number of Passengers</label>
               <div class="flex space-x-6">
                 <label class="inline-flex items-center">
-                  <input type="radio" name="passengers" value="solo" class="form-radio text-neon-blue bg-space-dark border-space-blue focus:ring-neon-blue" checked />
+                  <input type="radio"  name="passengers" value="solo" class="form-radio text-neon-blue bg-space-dark border-space-blue focus:ring-neon-blue" checked />
                   <span class="ml-2 text-gray-100">Solo Traveler</span>
                 </label>
                 <label class="inline-flex items-center">
@@ -215,12 +214,11 @@
                   <span class="ml-2 text-gray-100">Couple (2)</span>
                 </label>
                 <label class="inline-flex items-center">
-                  <input type="radio" name="passengers" value="group" class="form-radio text-neon-blue bg-space-dark border-space-blue focus:ring-neon-blue" />
+                  <input type="radio"  name="passengers" value="group" class="form-radio text-neon-blue bg-space-dark border-space-blue focus:ring-neon-blue" />
                   <span class="ml-2 text-gray-100">Group (3-6)</span>
                 </label>
               </div>
             </div>
-
             <div class="mt-8">
               <label class="block text-sm font-medium text-gray-300 mb-3">Accommodation Type</label>
               <div id="accommodation-options" class="grid md:grid-cols-3 gap-4">
@@ -228,51 +226,25 @@
             </div>
           </section>
           <section class="mb-10">
-            <h2 class="text-2xl font-orbitron font-semibold mb-6 text-neon-cyan">Personal Information</h2>
-
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
-
-              <div>
-                <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
-
-              <div>
-                <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
-            </div>
-
-            <div>
-              <label for="requirements" class="block text-sm font-medium text-gray-300 mb-2">Special Requirements</label>
-              <textarea id="requirements" name="requirements" rows="4" placeholder="Any special requirements or notes..." class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue resize-none"></textarea>
-            </div>
+     <div class="forme">
+     </div>
           </section>
           <div class="flex justify-between items-center bg-space-dark p-6 rounded-xl border-2 border-neon-purple/50 glow mb-8">
-              <h2 class="text-2xl font-orbitron font-semibold text-neon-purple">
-                  Total Journey Price:
+              <h2 class="text-2xl font-orbitron font-semibold text-neon-cyan">
+                  Total Price:
               </h2>
               <div class="text-right">
                   <span id="final-price-display" class="text-4xl font-orbitron font-bold text-neon-blue glow-text">
-                      $0
+                      
                   </span>
                   <p class="text-gray-400 text-sm">Estimated Total</p>
               </div>
           </div>
           
           <div class="mt-8 space-y-4">
-            <button type="button" class="w-full py-3 rounded-lg text-gray-200 font-semibold text-lg bg-space-blue hover:bg-space-blue/70 transition duration-200 border border-space-dark shadow-neon-blue\/50">Add Passenger</button>
+            <div class="btnadd">
+
+            </div>
             <button type="submit" id="submit-booking-button" class="w-full py-4 rounded-lg text-white font-bold text-xl bg-gradient-to-r from-neon-blue to-neon-purple hover:from-neon-blue/90 hover:to-neon-purple/90 transition duration-200 shadow-lg shadow-neon-blue/50">Confirm Booking</button>
           </div>
           <p class="text-center text-xs text-gray-400 mt-4">
