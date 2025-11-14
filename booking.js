@@ -20,7 +20,7 @@ let selectdest = document.getElementById("destination");
 function ajouteslect(destarr) {
   selectdest.innerHTML = '<option value="">Select your destination</option>';
   destarr.forEach((obj) => {
-    selectdest.innerHTML += `<option value="${obj.id}"">${obj.name}</option>`;
+    selectdest.innerHTML += `<option value="${obj.id}">${obj.name}</option>`;
   });
 }
 loaddest();
@@ -168,13 +168,13 @@ function ajouterform() {
     cont = 3;
     b.innerHTML = `<button type="button" class="add-prs w-full py-3 rounded-lg text-gray-200 font-semibold text-lg bg-space-blue hover:bg-space-blue/70 transition duration-200 border border-space-dark shadow-neon-blue\/50">Add Passenger</button>`;
     const addprs = document.querySelector(".add-prs");
-    addprs.addEventListener("click", () => {
+  addprs.onclick = () => {
       if (cont < 6) {
         cont++;
         addform(cont, f);
         price();
       } else alert("Maximum 6 passengers");
-    });
+    };
   }
   addform(cont, f);
   price();
@@ -188,7 +188,7 @@ function ajouterform() {
               <div>
                 <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
                 <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-             <span class="error-msg"></span>
+             <span class="error-msg "></span>
                 </div>
               <div>
                 <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
@@ -243,63 +243,139 @@ function validform() {
 
   forms.forEach((form) => {
     const firstName = form.querySelector('input[name="firstName"]');
+    const firstNameError = firstName.nextElementSibling; 
     const lastName = form.querySelector('input[name="lastName"]');
+    const lastNameError = lastName.nextElementSibling; 
     const email = form.querySelector('input[name="email"]');
+    const emailError = email.nextElementSibling; 
     const phone = form.querySelector('input[name="phone"]');
+    const phoneError = phone.nextElementSibling; 
     const textarea = form.querySelector('textarea[name="requirements"]');
+    const textareaError = textarea.nextElementSibling; 
+    const dateInput = form.querySelector('input[name="departureDate"]');
+    const dateError = form.querySelector('.date-error');
 
-    if (!firstName.value.trim()) {
-      alert("First Name is required");
+if (!firstName.value.trim()) {
+      firstNameError.innerText = "First Name is required";
       isvalidvalidation = false;
     } else if (!firstNameRegex.test(firstName.value.trim())) {
-      alert("Invalid First Name format");
+      firstNameError.innerText = "Invalid First Name format";
       isvalidvalidation = false;
+    } else {
+      firstNameError.innerText = "";
     }
 
     if (!lastName.value.trim()) {
-      alert("Last Name is required");
+      lastNameError.innerText = "Last Name is required";
       isvalidvalidation = false;
     } else if (!lastNameRegex.test(lastName.value.trim())) {
-      alert("Invalid Last Name format");
+      lastNameError.innerText = "Invalid Last Name format";
       isvalidvalidation = false;
+    } else {
+      lastNameError.innerText = "";
     }
 
     if (!phone.value.trim()) {
-      alert("Phone is required");
+      phoneError.innerText = "Phone is required";
       isvalidvalidation = false;
     } else if (!phoneRegex.test(phone.value.trim())) {
-      alert("Invalid Phone format");
+      phoneError.innerText = "Invalid Phone format";
       isvalidvalidation = false;
+    } else {
+      phoneError.innerText = "";
     }
 
     if (!email.value.trim()) {
-      alert("Email is required");
+      emailError.innerText = "Email is required";
       isvalidvalidation = false;
     } else if (!emailRegex.test(email.value.trim())) {
-      alert("Invalid Email format");
+      emailError.innerText = "Invalid Email format";
       isvalidvalidation = false;
+    } else {
+      emailError.innerText = "";
     }
 
     if (!textarea.value.trim()) {
-      alert("Requirements is required");
+      textareaError.innerText = "Requirements is required";
       isvalidvalidation = false;
     } else if (!textareaRegex.test(textarea.value.trim())) {
-      alert("Invalid Requirements format");
+      textareaError.innerText = "Invalid Requirements format";
       isvalidvalidation = false;
+    } else {
+      textareaError.innerText = "";
+    }
+  if (!dateInput.value) {
+      dateError.innerText = "Departure date is required";
+      isvalidvalidation = false;
+    } else {
+      const today = new Date();
+      today.setHours(0,0,0,0); 
+      const selectedDate = new Date(dateInput.value);
+      const maxDate = new Date();
+      maxDate.setDate(today.getDate() + 30);
+
+      if (selectedDate < today) {
+          dateError.innerText = "Date must be in the future";
+          isvalidvalidation = false;
+      } else if (selectedDate > maxDate) {
+          dateError.innerText = "Date cannot be more than 30 days from today";
+          isvalidvalidation = false;
+      } else {
+          dateError.innerText = "";
+      }
     }
   });
 
   return isvalidvalidation;
 }
-
 const btnsubmit = document.getElementById("submit-booking-button");
 
 btnsubmit.addEventListener("click", (e) => {
   e.preventDefault();
-
   if (validform()) {
-    alert("Form is valid.");
-  } else {
-    alert("Fix errors first!");
+    let destination = document.getElementById("destination").value;
+let departureDate = document.getElementById("departureDate").value;
+let accommodationType = document.querySelector('input[name="accommodation_type"]:checked').value;
+let passengersType = document.querySelector('input[name="passengers"]:checked').value;
+
+let passengers = [];
+document.querySelectorAll(".formulaire").forEach((form) => {
+    let firstName = form.querySelector('input[name="firstName"]').value;
+    let lastName = form.querySelector('input[name="lastName"]').value;
+    let email = form.querySelector('input[name="email"]').value;
+    let phone = form.querySelector('input[name="phone"]').value;
+    let requirements = form.querySelector('textarea[name="requirements"]').value;
+
+    passengers.push({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        requirements: requirements
+    });
+});
+    let user = JSON.parse(localStorage.getItem("userl"));
+    if(!user || !user.isLoggedIn){
+        if(!confirm("you are not loging")){
+         return; 
+        }
+    }
+let booking = {
+    id: "BK-" + Date.now(), 
+    destination: destination,
+    departureDate: departureDate,
+    accommodationType: accommodationType,
+    passengersType: passengersType,
+    passengers: passengers,
+    totalPrice: document.getElementById("final-price-display").innerText
+};
+
+let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+bookings.push(booking);
+localStorage.setItem("bookings", JSON.stringify(bookings));
+window.location.href = "my-bookings.html";
   }
 });
+
+
+
