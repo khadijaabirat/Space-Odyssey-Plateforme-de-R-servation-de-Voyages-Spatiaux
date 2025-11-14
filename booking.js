@@ -158,6 +158,7 @@ function ajouterform() {
   const selc = document.querySelector('input[name="passengers"]:checked').value;
   const b = document.querySelector(".btnadd");
   b.innerHTML = "";
+  f.innerHTML = "";
   if (selc === "solo") {
     cont = 1;
   }
@@ -171,53 +172,53 @@ function ajouterform() {
   addprs.onclick = () => {
       if (cont < 6) {
         cont++;
-        addform(cont, f);
+        addform(f);
         price();
       } else alert("Maximum 6 passengers");
     };
   }
-  addform(cont, f);
+  for (let i = 1; i <= cont; i++) {
+    addform(f); 
+  }
   price();
-  function addform(cont, f) {
-    f.innerHTML = "";
-    for (let i = 1; i <= cont; i++) {
+}
+function addform(f) {
+
       const fdi = document.createElement("div");
       fdi.className = "formulaire";
       fdi.innerHTML = `<h2 class="text-2xl font-orbitron font-semibold mb-6 text-neon-cyan">Personal Information</h2>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
+                <input type="text" name="firstName" placeholder="Enter your first name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
              <span class="error-msg "></span>
                 </div>
               <div>
                 <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
+                <input type="text"  name="lastName" placeholder="Enter your last name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
               <span class="error-msg"></span>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
+                <input type="email"  name="email" placeholder="Enter your email" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
              <span class="error-msg"></span>
                 </div>
               <div>
                 <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
+                <input type="tel" name="phone" placeholder="Enter your phone number" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
               <span class="error-msg"></span>
                 </div>
             </div>
             <div>
               <label for="requirements" class="block text-sm font-medium text-gray-300 mb-2">Special Requirements</label>
-              <textarea id="requirements" name="requirements" rows="4" placeholder="Any special requirements or notes..." class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue resize-none"></textarea>
+              <textarea  name="requirements" rows="4" placeholder="Any special requirements or notes..." class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue resize-none"></textarea>
             <span class="error-msg"></span>
               </div>`;
       f.appendChild(fdi);
     }
-  }
-}
-
+  
 function price() {
   let tprice = pricePerDay * day * 2 * cont + priceprincipale;
   console.log(tprice, pricePerDay, day, cont, priceprincipale);
@@ -240,6 +241,8 @@ function validform() {
   const phoneRegex = /^(?:\+212|0)([5-7])\d{8}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const textareaRegex = /^.{2,}$/;
+  const dateInput = document.getElementById('departureDate');
+    const dateError = document.getElementById('date-error');
 
   forms.forEach((form) => {
     const firstName = form.querySelector('input[name="firstName"]');
@@ -252,9 +255,7 @@ function validform() {
     const phoneError = phone.nextElementSibling; 
     const textarea = form.querySelector('textarea[name="requirements"]');
     const textareaError = textarea.nextElementSibling; 
-    const dateInput = form.querySelector('input[name="departureDate"]');
-    const dateError = form.querySelector('.date-error');
-
+  
 if (!firstName.value.trim()) {
       firstNameError.innerText = "First Name is required";
       isvalidvalidation = false;

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-space-dark text-gray-200 font-orbitron">
+
+    <header class="p-6 bg-space-blue border-b-2 border-space-dark">
+        <h1 class="text-3xl font-bold text-neon-cyan">My Bookings</h1>
+    </header>
+
+    <main class="p-6">
+        <div id="bookings-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+        <p id="no-bookings-msg" class="text-gray-400 text-center mt-10 hidden">No bookings found.</p>
+    </main>
+
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const bookingsContainer = document.getElementById('bookings-container');
+  const noBookingsMsg = document.getElementById('no-bookings-msg');
+
+  const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+  if (bookings.length === 0) {
+    noBookingsMsg.classList.remove('hidden');
+  } else {
+    noBookingsMsg.classList.add('hidden');
+    bookingsContainer.innerHTML = ""; 
+    bookings.forEach(booking => {
+      const card = document.createElement('div');
+      card.className = 'accommodation-card p-4 rounded-xl border-2 border-space-dark bg-space-blue transition duration-300 hover:border-neon-blue/70';
+      
+      const passengersList = booking.passengers.map(p => `${p.firstName} ${p.lastName}`).join(', ');
+
+      card.innerHTML = `
+        <h2 class="text-xl font-bold mb-2 text-neon-cyan">${booking.destination}</h2>
+        <p class="text-gray-400 mb-1"><span class="font-bold">Departure Date:</span> ${booking.departureDate}</p>
+        <p class="text-gray-400 mb-1"><span class="font-bold">Accommodation:</span> ${booking.accommodationType}</p>
+        <p class="text-gray-400 mb-1"><span class="font-bold">Passengers:</span> ${passengersList}</p>
+        <p class="text-neon-blue font-bold text-lg mt-2">Total Price: ${booking.totalPrice}</p>
+      `;
+
+      bookingsContainer.appendChild(card);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
