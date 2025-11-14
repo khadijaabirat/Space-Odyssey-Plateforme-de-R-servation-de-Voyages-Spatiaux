@@ -27,12 +27,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
 
+  const ticketModal = document.createElement('div');
+  ticketModal.id = 'ticket-modal';
+  ticketModal.className = 'hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50';
+  ticketModal.innerHTML = `
+    <div class="bg-space-dark w-[80%] p-6 rounded-xl relative">
+      <button id="close-ticket" class="absolute top-4 right-4 text-neon-blue font-bold">X</button>
+      <div id="ticket-content"></div>
+      <button id="print-ticket" class="mt-6 py-3 px-6 bg-neon-blue text-gray-900 rounded-lg font-bold hover:bg-neon-blue/80">Print</button>
+    </div>
+  `;
+  document.body.appendChild(ticketModal);
+
+  const ticketContent = document.getElementById('ticket-content');
+  const closeTicketBtn = document.getElementById('close-ticket');
+  const printBtn = document.getElementById('print-ticket');
+
   if (bookings.length === 0) {
     noBookingsMsg.classList.remove('hidden');
   } else {
     noBookingsMsg.classList.add('hidden');
     bookingsContainer.innerHTML = ""; 
-    bookings.forEach(booking => {
+    bookings.forEach((booking, index) => {
       const card = document.createElement('div');
       card.className = 'accommodation-card p-4 rounded-xl border-2 border-space-dark bg-space-blue transition duration-300 hover:border-neon-blue/70';
       
@@ -44,13 +60,44 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="text-gray-400 mb-1"><span class="font-bold">Accommodation:</span> ${booking.accommodationType}</p>
         <p class="text-gray-400 mb-1"><span class="font-bold">Passengers:</span> ${passengersList}</p>
         <p class="text-neon-blue font-bold text-lg mt-2">Total Price: ${booking.totalPrice}</p>
+        <button class="view-ticket-btn mt-2 py-2 px-4 bg-neon-blue text-gray-900 rounded-lg font-semibold" data-index="${index}">View Ticket</button>
       `;
-
       bookingsContainer.appendChild(card);
+    });
+
+    document.querySelectorAll(".view-ticket-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.dataset.index;
+        const booking = bookings[idx];
+
+        ticketContent.innerHTML = `
+          <h2 class="text-2xl font-orbitron font-bold text-neon-cyan mb-4">Booking Ticket</h2>
+          <p><strong>Booking ID:</strong> ${booking.id}</p>
+          <p><strong>Destination:</strong> ${booking.destination}</p>
+          <p><strong>Departure Date:</strong> ${booking.departureDate}</p>
+          <p><strong>Accommodation:</strong> ${booking.accommodationType}</p>
+          <p><strong>Passengers Type:</strong> ${booking.passengersType}</p>
+          <h3 class="font-bold mt-4">Passenger Details:</h3>
+          <ul>
+            ${booking.passengers.map(p => `<li>${p.firstName} ${p.lastName} - ${p.email} - ${p.phone}</li>`).join('')}
+          </ul>
+          <p class="font-bold mt-4">Total Price: ${booking.totalPrice}</p>
+        `;
+        ticketModal.classList.remove("hidden");
+      });
+    });
+
+    closeTicketBtn.addEventListener("click", () => {
+      ticketModal.classList.add("hidden");
+    });
+
+    printBtn.addEventListener("click", () => {
+      window.print();
     });
   }
 });
 </script>
+
 
 </body>
 </html>
