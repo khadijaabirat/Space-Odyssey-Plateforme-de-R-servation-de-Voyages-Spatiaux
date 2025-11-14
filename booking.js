@@ -373,8 +373,21 @@ let booking = {
 let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 bookings.push(booking);
 localStorage.setItem("bookings", JSON.stringify(bookings));
+ 
+
+
+document.getElementById("destination").value = "";
+document.getElementById("departureDate").value = "";
+document.querySelectorAll('input[name="accommodation_type"]').forEach((el) => el.checked = false);
+document.querySelectorAll('input[name="passengers"]').forEach((el) => el.checked = false);
+document.querySelector(".forme").innerHTML = "";
+document.getElementById("final-price-display").innerHTML = "Veuillez sélectionner les options";
+
+
+alert("You will be redirected to your bookings");
 window.location.href = "my-bookings.html";
-  }
+
+}
 });
 
 
