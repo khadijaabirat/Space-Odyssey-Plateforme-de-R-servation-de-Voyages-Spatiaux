@@ -357,9 +357,11 @@ document.querySelectorAll(".formulaire").forEach((form) => {
 });
     let user = JSON.parse(localStorage.getItem("userl"));
     if(!user || !user.isLoggedIn){
-        if(!confirm("you are not loging")){
-         return; 
-        }
+                alert("firm(you are not loging");
+                window.location.href = "login.html";
+    return;
+
+        
     }
 let booking = {
     id: "BK-" + Date.now(), 
@@ -370,25 +372,18 @@ let booking = {
     passengers: passengers,
     totalPrice: document.getElementById("final-price-display").innerText
 };
-
 let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 bookings.push(booking);
 localStorage.setItem("bookings", JSON.stringify(bookings));
- 
-
-
 document.getElementById("destination").value = "";
 document.getElementById("departureDate").value = "";
 document.querySelectorAll('input[name="accommodation_type"]').forEach((el) => el.checked = false);
 document.querySelectorAll('input[name="passengers"]').forEach((el) => el.checked = false);
 document.querySelector(".forme").innerHTML = "";
 document.getElementById("final-price-display").innerHTML = "Veuillez sélectionner les options";
-
-
 alert("You will be redirected to your bookings");
 window.location.href = "my-bookings.html";
-
-}
+    }
 });
 
 
