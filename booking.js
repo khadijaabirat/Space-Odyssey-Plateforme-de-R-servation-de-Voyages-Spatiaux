@@ -182,31 +182,37 @@ function ajouterform() {
     f.innerHTML = "";
     for (let i = 1; i <= cont; i++) {
       const fdi = document.createElement("div");
+      fdi.className = "formulaire";
       fdi.innerHTML = `<h2 class="text-2xl font-orbitron font-semibold mb-6 text-neon-cyan">Personal Information</h2>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
                 <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
+             <span class="error-msg"></span>
+                </div>
               <div>
                 <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
                 <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
+              <span class="error-msg"></span>
+                </div>
             </div>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
+             <span class="error-msg"></span>
+                </div>
               <div>
                 <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue" />
-              </div>
+              <span class="error-msg"></span>
+                </div>
             </div>
             <div>
               <label for="requirements" class="block text-sm font-medium text-gray-300 mb-2">Special Requirements</label>
               <textarea id="requirements" name="requirements" rows="4" placeholder="Any special requirements or notes..." class="w-full p-3 bg-space-dark border border-space-blue rounded-lg text-gray-100 focus:ring-neon-blue focus:border-neon-blue resize-none"></textarea>
-            </div>`;
+            <span class="error-msg"></span>
+              </div>`;
       f.appendChild(fdi);
     }
   }
@@ -224,3 +230,76 @@ function price() {
     }
   }
 }
+function validform() {
+  let isvalidvalidation = true;
+
+  const forms = document.querySelectorAll(".formulaire");
+
+  const firstNameRegex = /^[a-zA-Z\s]{2,}$/;
+  const lastNameRegex = /^[a-zA-Z\s]{2,}$/;
+  const phoneRegex = /^(?:\+212|0)([5-7])\d{8}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const textareaRegex = /^.{2,}$/;
+
+  forms.forEach((form) => {
+    const firstName = form.querySelector('input[name="firstName"]');
+    const lastName = form.querySelector('input[name="lastName"]');
+    const email = form.querySelector('input[name="email"]');
+    const phone = form.querySelector('input[name="phone"]');
+    const textarea = form.querySelector('textarea[name="requirements"]');
+
+    if (!firstName.value.trim()) {
+      alert("First Name is required");
+      isvalidvalidation = false;
+    } else if (!firstNameRegex.test(firstName.value.trim())) {
+      alert("Invalid First Name format");
+      isvalidvalidation = false;
+    }
+
+    if (!lastName.value.trim()) {
+      alert("Last Name is required");
+      isvalidvalidation = false;
+    } else if (!lastNameRegex.test(lastName.value.trim())) {
+      alert("Invalid Last Name format");
+      isvalidvalidation = false;
+    }
+
+    if (!phone.value.trim()) {
+      alert("Phone is required");
+      isvalidvalidation = false;
+    } else if (!phoneRegex.test(phone.value.trim())) {
+      alert("Invalid Phone format");
+      isvalidvalidation = false;
+    }
+
+    if (!email.value.trim()) {
+      alert("Email is required");
+      isvalidvalidation = false;
+    } else if (!emailRegex.test(email.value.trim())) {
+      alert("Invalid Email format");
+      isvalidvalidation = false;
+    }
+
+    if (!textarea.value.trim()) {
+      alert("Requirements is required");
+      isvalidvalidation = false;
+    } else if (!textareaRegex.test(textarea.value.trim())) {
+      alert("Invalid Requirements format");
+      isvalidvalidation = false;
+    }
+  });
+
+  return isvalidvalidation;
+}
+
+const btnsubmit = document.getElementById("submit-booking-button");
+
+btnsubmit.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (validform()) {
+    alert("Form is valid.");
+  } else {
+    alert("Fix errors first!");
+  }
+});
